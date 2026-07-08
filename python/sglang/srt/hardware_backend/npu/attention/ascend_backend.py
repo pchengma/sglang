@@ -1453,11 +1453,12 @@ class AscendAttnBackend(AttentionBackend):
                 # forward_batch.encoder_lens is not None in cross attention scend, we add native attn to solve accuracy issues
                 # Model skywork-reward-gemma2-2-27B also suffers from precision anomalies, thus the torch native backend becomes beneficial approach.
                 if (
-                    layer.qk_head_dim <= 128
-                    and causal
-                    and forward_batch.encoder_lens is None
-                    and layer.logit_cap == 0
-                    and not getattr(self, "use_native_sdpa", False)
+                    # layer.qk_head_dim <= 128
+                    # and causal
+                    # and forward_batch.encoder_lens is None
+                    # and layer.logit_cap == 0
+                    # and not getattr(self, "use_native_sdpa", False)
+                    False
                 ):
                     if not self.use_alibi:
                         query = q.reshape(-1, layer.tp_q_head_num * layer.qk_head_dim)

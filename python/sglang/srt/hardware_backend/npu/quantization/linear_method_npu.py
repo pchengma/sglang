@@ -620,3 +620,22 @@ class NPUMXFP4W4A8OfflineLinearMethod(_NPULinearMethodBase):
         # Restore original shape (replace last dim with output features).
         output_shape = list(input_shape[:-1]) + [output.shape[-1]]
         return output.reshape(output_shape)
+
+
+class NPUW8A8MXFP8DynamicLinearMethod(_NPULinearMethodBase):
+    def process_weights_after_loading(self, layer: torch.nn.Module):
+        layer.weight.data = layer.weight.data.transpose(0, 1).contiguous()
+        layer.weight.data = npu_format_cast(layer.weight.data)
+        layer.weight_scale.data = layer.weight_scale.data.flatten()
+        # Compressed-tensors format doesn't have this field
+        if hasattr(layer, "weight_offset"):
+            layer.weight_offset.data = layer.weight_offset.data.flatten()
+    
+    def apply(
+        self,
+        layer: torch.nn.Module,
+        x: torch.Tensor,
+        bias: Optional[torch.Tensor] = None,
+        tp_rank: Optional[int] = 0,
+    ) -> torch.Tensor:
+        pass
