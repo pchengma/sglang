@@ -591,6 +591,8 @@ class TokenizerManager(TokenizerControlMixin, TokenizerManagerScoreMixin):
         obj: Union[GenerateReqInput, EmbeddingReqInput],
         request: Optional[fastapi.Request] = None,
     ):
+        print(f"++++[mpc]+++111+++ generate_request ++++++++++")
+        logger.info(f"++++[mpc]++++++ generate_request ++++++++++")
         self.auto_create_handle_loop()
 
         # Normalize the request

@@ -60,7 +60,7 @@ if __name__ == "__main__":
         UserWarning,
         stacklevel=1,
     )
-
+    print(f"++++[mpc]++++++ Welcome to launch_server.py ++++++++++")
     from sglang.srt.plugins import load_plugins
 
     load_plugins()

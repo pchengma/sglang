@@ -1,0 +1,20 @@
+Add log.
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Wed Jul 8 19:33:04 2026 +0800
+#
+# On branch qwen3.5
+# Your branch is up to date with 'origin/qwen3.5'.
+#
+# Changes to be committed:
+#	modified:   python/sglang/launch_server.py
+#	modified:   python/sglang/srt/managers/multimodal_processor.py
+#	modified:   python/sglang/srt/managers/tokenizer_manager.py
+#	modified:   python/sglang/srt/model_loader/utils.py
+#	modified:   python/sglang/srt/models/qwen3.py
+#	modified:   python/sglang/srt/models/registry.py
+#	modified:   python/sglang/srt/ray/engine.py
+#	modified:   python/sglang/srt/ray/http_server.py
+#

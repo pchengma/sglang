@@ -1,4 +1,6 @@
 # Adapted from qwen2.py
+import traceback
+
 import logging
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
@@ -272,6 +274,8 @@ class Qwen3Attention(nn.Module):
         hidden_states: torch.Tensor,
         forward_batch: ForwardBatch,
     ) -> torch.Tensor:
+        #stack = traceback.format_stack()
+        #print(f"++++[mpc]++++++ qwen3 forward ++++++++++".join(stack))
         if get_global_server_args().rl_on_policy_target is not None:
             hidden_states = hidden_states.bfloat16()
 

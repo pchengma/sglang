@@ -49,6 +49,7 @@ def get_mm_processor(
     model_config=None,
     **kwargs,
 ) -> BaseMultimodalProcessor:
+    print(f"++++[mpc]+++111+++ get_mm_processor ++++++++++")
     model_impl = str(getattr(server_args, "model_impl", "auto")).lower()
     uses_transformers_backend = model_impl == "transformers"
     if model_impl == "auto" and model_config is not None:

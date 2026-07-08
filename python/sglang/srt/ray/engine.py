@@ -233,6 +233,7 @@ class RayEngine(Engine):
         placement_group = kwargs.pop("placement_group", None)
         if "log_level" not in kwargs:
             kwargs["log_level"] = "error"
+        print(f"++++[mpc]++++++ RayEngine __init__ ++++++++++")
         server_args = ServerArgs(**kwargs)
         server_args.placement_group = placement_group
         super().__init__(server_args=server_args)

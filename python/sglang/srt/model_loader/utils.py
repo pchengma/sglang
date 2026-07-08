@@ -107,7 +107,7 @@ def _model_impl_from_architecture(architecture: str) -> ModelImpl:
 
 def resolve_transformers_arch(model_config: ModelConfig, architectures: list[str]):
     backend_arch = _get_transformers_backend_arch(model_config, architectures)
-
+    print(f"++++[mpc]+++111+++ resolve_transformers_arch %s ", backend_arch)
     for arch in architectures:
         if arch.startswith("Transformers"):
             continue
@@ -139,6 +139,7 @@ def resolve_transformers_arch(model_config: ModelConfig, architectures: list[str
             )
         model_module = getattr(transformers, arch, None)
         if model_module is None:
+            print(f"++++[mpc]+++111+++ None ++++++++++")
             has_auto_model = "AutoModel" in auto_modules
             if not has_auto_model and model_config.model_impl == ModelImpl.TRANSFORMERS:
                 logger.warning(
@@ -165,6 +166,7 @@ def resolve_transformers_arch(model_config: ModelConfig, architectures: list[str
                 )
             model_module = auto_modules["AutoModel"]
         if model_config.model_impl == ModelImpl.TRANSFORMERS:
+            print(f"++++[mpc]+++111+++ TRANSFORMERS ++++++++++")
             if hasattr(model_module, "is_backend_compatible") and (
                 not model_module.is_backend_compatible()
             ):
@@ -176,6 +178,7 @@ def resolve_transformers_arch(model_config: ModelConfig, architectures: list[str
                     arch,
                 )
         if model_config.model_impl == ModelImpl.AUTO:
+            print(f"++++[mpc]+++111+++ AUTO ", hasattr(model_module, "is_backend_compatible"), "  ", not model_module.is_backend_compatible())
             if hasattr(model_module, "is_backend_compatible") and (
                 not model_module.is_backend_compatible()
             ):
@@ -220,6 +223,7 @@ def get_model_architecture(model_config: ModelConfig) -> Tuple[Type[nn.Module], 
         architectures = ["MindSporeForCausalLM"]
     elif not is_native_supported or model_config.model_impl == ModelImpl.TRANSFORMERS:
         architectures = resolve_transformers_arch(model_config, architectures)
+    print(f"++++[mpc]+++111+++ architectures: ", architectures)
     model_cls, resolved_arch = ModelRegistry.resolve_model_cls(architectures)
     setattr(model_config, "_resolved_model_arch", resolved_arch)
     setattr(
@@ -239,6 +243,7 @@ def get_resolved_model_impl(model_config: ModelConfig) -> ModelImpl:
     if resolved_arch is None:
         _, resolved_arch = get_model_architecture(model_config)
 
+    print(f"++++[mpc]+++111+++ get_resolved_model_impl resolved_arch ", resolved_arch)
     resolved_model_impl = _model_impl_from_architecture(resolved_arch)
     setattr(model_config, "_resolved_model_arch", resolved_arch)
     setattr(model_config, "_resolved_model_impl", resolved_model_impl)

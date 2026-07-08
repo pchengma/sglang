@@ -25,6 +25,7 @@ class _ModelRegistry:
         self, package_name: str, overwrite: bool = False, strict: bool = False
     ):
         new_models = import_model_classes(package_name, strict=strict)
+        print(f"++++[mpc]++++++ register ", package_name, new_models)
         if overwrite:
             self.models.update(new_models)
         else:
@@ -93,8 +94,10 @@ class _ModelRegistry:
 
 @lru_cache()
 def import_model_classes(package_name: str, strict: bool = False):
+    print(f"++++[mpc]+++111+++ import_model_classes ++++++++++")
     model_arch_name_to_cls = {}
     package = importlib.import_module(package_name)
+    print(f"++++[mpc]+++111+++ package__path__ ", package.__path__)
     for _, name, ispkg in pkgutil.iter_modules(package.__path__, package_name + "."):
         if not ispkg:
             if name.split(".")[-1] in envs.SGLANG_DISABLED_MODEL_ARCHS.get():
@@ -114,11 +117,13 @@ def import_model_classes(package_name: str, strict: bool = False):
                     entry, list
                 ):  # To support multiple model classes in one module
                     for tmp in entry:
+                        print(f"++++[mpc]+++111+++ list tmp.__name__  ", tmp.__name__ )
                         assert (
                             tmp.__name__ not in model_arch_name_to_cls
                         ), f"Duplicated model implementation for {tmp.__name__}"
                         model_arch_name_to_cls[tmp.__name__] = tmp
                 else:
+                    print(f"++++[mpc]+++111+++ entry.__name__  ", entry.__name__ )
                     assert (
                         entry.__name__ not in model_arch_name_to_cls
                     ), f"Duplicated model implementation for {entry.__name__}"

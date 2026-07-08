@@ -45,7 +45,7 @@ def launch_server(
         execute_warmup_func = _execute_server_warmup
 
     server_args.placement_group = None
-
+    print(f"++++[mpc]++++++ launch_server ++++++++++")
     (
         tokenizer_manager,
         template_manager,
@@ -59,6 +59,7 @@ def launch_server(
         run_detokenizer_process_func=run_detokenizer_process_func,
     )
 
+    print(f"++++[mpc]++++++ _setup_and_run_http_server ++++++++++")
     _setup_and_run_http_server(
         server_args,
         tokenizer_manager,
